@@ -8,26 +8,40 @@ function App() {
   //let counter = 5;
 
   const addValue = () => {
-    //counter += 1;
-    setCounter(counter === 10 ? counter : counter) // can also increment the value here 
-    /*
-      setCounter(counter++)
-      1. Asynchronous State Updates:
-      + setCounter doesn't update the state immediately. It schedules a state update, which happens asynchronously.
-T     + his means the value of counter might not reflect the update in the subsequent lines of code within the same function.
+    
+    //setCounter(counter += 1);   // No restriction to the maximum value for incrementing.
+    
+    // setCounter(counter === 10 ? 10 : ++counter) // Added a restriction to the maximum value for incrementing.
+    // setCounter(counter === 10 ? 10 : counter++) // It is incorrect way and cause issue. (refer README.md)
+    
+    //console.log("Value add", Math.random(), counter);
 
-      2. Postfix Increment (counter++):
-      +  The postfix increment operator captures the current value of counter before incrementing it.
-      +  In this case, it captures the original value (e.g., 0), and then the increment happens, but the captured value is used for the state update.
+    /* increment the value by 4 by calling setState 4 times */
+    
+    // Below code not work due React State Batching Feature
+    /* 
+      setCounter(counter + 1);
+      setCounter(counter + 1);
+      setCounter(counter + 1);
+      setCounter(counter + 1); 
+    
     */
-
-    console.log("Value add", Math.random(), counter);
+        
+    // Below code work
+    /*
+      setCounter(prevCounter => prevCounter + 1);
+      setCounter(prevCounter => prevCounter + 1);
+      setCounter(prevCounter => prevCounter + 1);
+      setCounter(prevCounter => prevCounter + 1);
+    */
+      
+    
   };
 
   const removeValue = () => {
-    //counter -= 1;   
-    setCounter(counter === 0 ? counter: --counter) // can also decrement the value here 
-    console.log("Value remove", Math.random(), counter);
+    //setCounter(counter -= 1);   // No restriction to the maximum value for decrementing.
+    setCounter(counter === 0 ? counter: --counter) // Added a restriction to the maximum value for decrementing.
+    //console.log("Value remove", Math.random(), counter);
   }
 
 
